@@ -1,0 +1,35 @@
+{
+  "name": "sms",
+  "version": "0.1.0",
+  "private": true,
+  "description": "School Management System — npm workspaces monorepo",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=22.13.0",
+    "npm": ">=10.0.0"
+  },
+  "workspaces": [
+    "packages/*",
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "predev": "npm run build -w @sms/shared",
+    "dev": "concurrently -n shared,server,client -c blue,green,magenta \"npm run dev -w @sms/shared\" \"npm run dev -w @sms/server\" \"npm run dev -w @sms/client\"",
+    "build": "npm run build -w @sms/shared && npm run build -w @sms/server && npm run build -w @sms/client",
+    "pretypecheck": "npm run build -w @sms/shared",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "pretest": "npm run build -w @sms/shared",
+    "test": "npm run test --workspaces --if-present",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.7",
+    "prettier": "^3.10.1"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true
+  }
+}
